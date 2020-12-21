@@ -21,6 +21,16 @@ def Area(event,x,y,flags,param):
         points.append((x, y))
         cropping = False
         cv2.rectangle(frame, points[0], points[1], (0, 255, 0), 2)
+def rank_dot(points):
+    global x0, y0, x1, y1
+    x0, y0 = points[0][0], points[0][1]
+    x1, y1 = points[1][0], points[1][1]
+    if x0 >= x1:
+        x0, x1 = points[1][0], points[0][0]
+        if y0 >= y1:
+            y0, y1 = points[1][1], points[0][1]
+    elif y0 >= y1:
+        y0, y1 = points[1][1], points[0][1]
 while show:
     key = cv2.waitKey(5) & 0XFF
     cv2.setMouseCallback("Video",Area)
@@ -35,7 +45,9 @@ while show:
     elif key == C:
         p_c = True
         if len(points) == 2:
-            target = clone[points[0][1]:points[1][1], points[0][0]:points[1][0]]
+            rank_dot(points)
+            # target = clone[points[0][1]:points[1][1], points[0][0]:points[1][0]]
+            target = clone[y0:y1, x0:x1]
             print(target.shape)
             cv2.imshow(TARGET, target)
         else:
@@ -47,5 +59,6 @@ while show:
             cv2.destroyWindow(TARGET)
             cv2.imshow("target",target)
             cv2.imwrite("target.png", target, [cv2.IMWRITE_PNG_COMPRESSION, 0])
+            print("Save the target as image is successful")
     elif key == esc:
         break
