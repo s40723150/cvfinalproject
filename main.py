@@ -5,8 +5,10 @@ esc = 27
 C = ord("c")
 Q = ord("q")
 R = ord("r")
+S = ord("s")
 show, frame = cap.read()
-
+TARGET = "TARGET"
+p_c = False
 clone = frame.copy()
 points = []
 cropping = False
@@ -27,13 +29,23 @@ while show:
         points = []
         frame = clone.copy()
         cv2.imshow("Video", frame)
-        cv2.destroyWindow("ROI")
+        cv2.destroyWindow(TARGET)
+        p_c = False
         print("pressed R")
     elif key == C:
-        print("pressed C")
+        p_c = True
         if len(points) == 2:
-            roi = clone[points[0][1]:points[1][1], points[0][0]:points[1][0]]
-            print(roi.shape)
-            cv2.imshow("ROI", roi)
+            target = clone[points[0][1]:points[1][1], points[0][0]:points[1][0]]
+            print(target.shape)
+            cv2.imshow(TARGET, target)
+        else:
+            print("Pleace select target.")
+    elif key == S:
+        if p_c is False:
+            print("Pleace select target.")
+        else:
+            cv2.destroyWindow(TARGET)
+            cv2.imshow("target",target)
+            cv2.imwrite("target.png", target, [cv2.IMWRITE_PNG_COMPRESSION, 0])
     elif key == esc:
         break
