@@ -12,7 +12,7 @@ def Area(event,x,y,flags,param):
             cv2.rectangle(clone, points[0], (x, y), (0, 255, 0), 2)
     elif event == cv2.EVENT_LBUTTONUP:
         mouse_pressed = False
-        points.append((x, y))
+        points.append((x, y))# [(x0, y0), (x1, y1)]
         cv2.rectangle(clone, points[0], points[1], (0, 255, 0), 2)
 def rank_dot(points):
     global x0, y0, x1, y1
