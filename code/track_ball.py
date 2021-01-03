@@ -62,6 +62,7 @@ if __name__ == "__main__":
             center2 = (float(M["m10"] / M["m00"]), float(M["m01"] / M["m00"]))
             if radius >= 10:
                 cv2.circle(tracker, center, 15, (0, 255, 0), 3)
+                cv2.putText(tracker, "ball", ((center[0]-15),(center[1]-20)), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
         Velocity(center2)
         position(center)
         tracker = cv2.resize(tracker, (240, 480))
