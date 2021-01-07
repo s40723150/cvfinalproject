@@ -60,11 +60,11 @@ if __name__ == "__main__":
             M = cv2.moments(c)
             center = (int(M["m10"] / M["m00"]), int(M["m01"] / M["m00"]))
             center2 = (float(M["m10"] / M["m00"]), float(M["m01"] / M["m00"]))
-            if radius >= 10:
+            if radius >= 10 and radius <=15:
                 cv2.circle(tracker, center, 15, (0, 255, 0), 3)
                 cv2.putText(tracker, "ball", ((center[0]-15),(center[1]-20)), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
-        Velocity(center2)
         position(center)
+        Velocity(center2)
         tracker = cv2.resize(tracker, (240, 480))
         demo = np.vstack([info, tracker])
         cv2.imshow("track_ball", demo)
